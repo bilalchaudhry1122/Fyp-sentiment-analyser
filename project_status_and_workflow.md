@@ -37,6 +37,9 @@ Initialized the specialized Project Brain repository map to accelerate agent exe
 - **`project-brain/memory/`**: 10 distinct memory files mapped by pipelines.
 - **`project-brain/tasks/`** & **`cache/`**: Subfolders to track state, logs, and context dynamically.
 
+### Git Version Control
+- **Repository Initialized**: Created a local git repository, added custom `.gitignore` exclusions, and completed the baseline initial commit.
+
 ---
 
 ## 2. What is Undergoing (Underway)
