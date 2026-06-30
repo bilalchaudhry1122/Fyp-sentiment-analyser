@@ -1,0 +1,14 @@
+{
+  "data_collection": ["config"],
+  "data_preprocessing": ["data_collection"],
+  "lexicon_feature_extraction": ["data_preprocessing", "lexicons"],
+  "roberta_finetuning": ["data_preprocessing"],
+  "rag_system": ["rag_knowledge_base"],
+  "hybrid_model": ["lexicon_feature_extraction", "roberta_finetuning", "rag_system"],
+  "model_evaluation": ["hybrid_model"],
+  "app": ["hybrid_model"],
+  "app_routes": ["app"],
+  "app_templates": ["app_routes"],
+  "app_static": ["app_templates"],
+  "config": []
+}

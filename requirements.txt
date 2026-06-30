@@ -1,0 +1,13 @@
+transformers
+torch
+scikit-learn
+pandas
+numpy
+praw
+tweepy
+nrclex
+faiss-cpu
+flask
+python-dotenv
+requests
+pypdf

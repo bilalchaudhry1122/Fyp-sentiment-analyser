@@ -1,0 +1,127 @@
+{% extends 'base.html' %}
+
+{% block title %}MindPulse - Hybrid Sentiment & Mental Health Analysis{% endblock %}
+
+{% block content %}
+<div class="dashboard-container">
+    <div class="welcome-section">
+        <h1>Social Media sentiment & Psychological Diagnostics</h1>
+        <p class="subtitle">Extract underlying emotional states, detect stress, anxiety, and depressive indicators, and flag early intervention needs using hybrid Deep Learning and Retrieval-Augmented Lexicons.</p>
+    </div>
+
+    <div class="analysis-grid">
+        <!-- Input Panel -->
+        <div class="card input-card">
+            <div class="card-header">
+                <h2><i class="fa-solid fa-pen-nib"></i> Analyze Social Media Text</h2>
+                <span class="badge">Hybrid Lexicon-RoBERTa + RAG</span>
+            </div>
+            <div class="card-body">
+                <form id="analyze-form">
+                    <div class="textarea-wrapper">
+                        <textarea id="text-input" placeholder="Paste a tweet, reddit comment, or paragraph here... (e.g., 'Lately I've been feeling extremely overwhelmed and exhausted, like no matter what I do I can't catch up...')" required></textarea>
+                        <div class="char-count">0 / 500</div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="load-sample-btn" class="btn btn-secondary">
+                            <i class="fa-solid fa-wand-magic-sparkles"></i> Load Sample Post
+                        </button>
+                        <button type="submit" id="submit-btn" class="btn btn-primary">
+                            <span>Analyze Context</span> <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Realtime Output Panel (Client-Side dynamic render or placeholder) -->
+        <div class="card result-card empty-state" id="result-display-card">
+            <div class="empty-state-content" id="empty-results-view">
+                <div class="icon-pulse">
+                    <i class="fa-solid fa-circle-nodes"></i>
+                </div>
+                <h3>Awaiting Input</h3>
+                <p>Submit text to run sentiment scoring, psychological feature mapping, and expert RAG lookup.</p>
+            </div>
+            
+            <!-- Result contents (hidden by default) -->
+            <div class="results-content hidden" id="results-view">
+                <div class="card-header">
+                    <h2><i class="fa-solid fa-square-poll-vertical"></i> Diagnostic Report</h2>
+                    <span class="badge" id="risk-badge">Risk Level: Low</span>
+                </div>
+                
+                <!-- Flagged post warning banner -->
+                <div id="flagged-banner" class="warning-banner hidden">
+                    <div class="warning-banner-icon">
+                        <i class="fa-solid fa-triangle-exclamation"></i>
+                    </div>
+                    <div class="warning-banner-text">
+                        <h4>High Psychological Concern Detected</h4>
+                        <p>This text exhibits strong markers related to significant psychological distress. Early intervention review is recommended.</p>
+                    </div>
+                </div>
+
+                <div class="results-metrics">
+                    <!-- Sentiment Gauge -->
+                    <div class="metric-group">
+                        <h3>Overall Sentiment</h3>
+                        <div class="sentiment-indicator">
+                            <div class="sentiment-val" id="sentiment-val">Neutral</div>
+                            <div class="sentiment-bar-bg">
+                                <div class="sentiment-bar-fill" id="sentiment-bar-fill" style="width: 50%;"></div>
+                            </div>
+                            <div class="sentiment-score-lbl">Score: <span id="sentiment-score-num">0.50</span></div>
+                        </div>
+                    </div>
+
+                    <!-- Psychological States -->
+                    <div class="metric-group">
+                        <h3>Psychological Diagnostics</h3>
+                        <div class="states-list">
+                            <div class="state-item">
+                                <span class="state-name">Depressive Indicators</span>
+                                <div class="state-progress">
+                                    <div class="state-progress-fill color-dep" id="state-dep-fill" style="width: 10%;"></div>
+                                </div>
+                                <span class="state-val" id="state-dep-val">Low</span>
+                            </div>
+                            <div class="state-item">
+                                <span class="state-name">Anxiety Indicators</span>
+                                <div class="state-progress">
+                                    <div class="state-progress-fill color-anx" id="state-anx-fill" style="width: 10%;"></div>
+                                </div>
+                                <span class="state-val" id="state-anx-val">Low</span>
+                            </div>
+                            <div class="state-item">
+                                <span class="state-name">Stress & Burnout</span>
+                                <div class="state-progress">
+                                    <div class="state-progress-fill color-str" id="state-str-fill" style="width: 10%;"></div>
+                                </div>
+                                <span class="state-val" id="state-str-val">Low</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="rag-context-section">
+                    <h3><i class="fa-solid fa-database"></i> Retrieved Expert Context (RAG)</h3>
+                    <div class="rag-text-box" id="rag-context-content">
+                        No RAG query initiated.
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Loading indicator -->
+            <div class="loading-overlay hidden" id="loading-view">
+                <div class="spinner"></div>
+                <p>Running Hybrid Neural-Lexicon Pipeline...</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='js/analyze.js') }}"></script>
+{% endblock %}

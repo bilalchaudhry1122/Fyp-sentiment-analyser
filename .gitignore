@@ -1,0 +1,13 @@
+.venv/
+__pycache__/
+*.pyc
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+models/roberta_finetuned/*
+!models/roberta_finetuned/.gitkeep
+models/rag_knowledge_base/*
+!models/rag_knowledge_base/.gitkeep
+config/config.ini
+project-brain/cache/

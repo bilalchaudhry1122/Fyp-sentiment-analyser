@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+
+{% block title %}Analysis Results - MindPulse{% endblock %}
+
+{% block content %}
+<div class="results-page-container">
+    <div class="card result-card">
+        <div class="card-header">
+            <h2><i class="fa-solid fa-square-poll-vertical"></i> Diagnostic Report</h2>
+            <span class="badge {{ 'risk-high' if result.flagged else 'risk-low' }}">Risk Level: {{ result.risk_level }}</span>
+        </div>
+        
+        {% if result.flagged %}
+        <div class="warning-banner">
+            <div class="warning-banner-icon">
+                <i class="fa-solid fa-triangle-exclamation"></i>
+            </div>
+            <div class="warning-banner-text">
+                <h4>High Psychological Concern Detected</h4>
+                <p>This text exhibits strong markers related to significant psychological distress. Early intervention review is recommended.</p>
+            </div>
+        </div>
+        {% endif %}
+
+        <div class="original-text-section">
+            <h3>Analyzed Text:</h3>
+            <blockquote class="analyzed-quote">"{{ result.text }}"</blockquote>
+        </div>
+
+        <div class="results-metrics">
+            <div class="metric-group">
+                <h3>Overall Sentiment</h3>
+                <div class="sentiment-indicator">
+                    <div class="sentiment-val">{{ result.sentiment }}</div>
+                    <div class="sentiment-bar-bg">
+                        <div class="sentiment-bar-fill" style="width: {{ result.sentiment_score * 100 }}%;"></div>
+                    </div>
+                    <div class="sentiment-score-lbl">Score: {{ "%.2f"|format(result.sentiment_score) }}</div>
+                </div>
+            </div>
+
+            <div class="metric-group">
+                <h3>Psychological Diagnostics</h3>
+                <div class="states-list">
+                    {% for state, level in result.psychological_states.items() %}
+                    <div class="state-item">
+                        <span class="state-name">{{ state|capitalize }} Indicators</span>
+                        <div class="state-progress">
+                            {% set fill_pct = 10 %}
+                            {% if level == 'Medium' %}{% set fill_pct = 50 %}{% elif level == 'High' %}{% set fill_pct = 90 %}{% endif %}
+                            <div class="state-progress-fill color-{{ state[:3] }}" style="width: {{ fill_pct }}%;"></div>
+                        </div>
+                        <span class="state-val">{{ level }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+        
+        <div class="form-actions" style="margin-top: 30px;">
+            <a href="{{ url_for('views.index') }}" class="btn btn-primary"><i class="fa-solid fa-arrow-left"></i> Run Another Analysis</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
